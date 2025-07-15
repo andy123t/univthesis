@@ -1,0 +1,171 @@
+% !TEX program = xelatex
+% 使用 texlive 完整编译:
+% xelatex -> bibtex -> xelatex -> xelatex
+% UNIV-Thesis 通用的硕博毕业论文 LaTeX 模板
+
+\documentclass[master]{univthesis}
+% master 硕士学位论文, 默认可省略
+% doctor 博士学位论文, 不能省略
+% print 用于打印, 封面等生成空白页
+% 提交给图书馆的电子版不要选 print
+
+% 这是一个通用的硕/博毕业论文 LaTeX 模板
+% 可以通过更换封面与声明页的 PDF 文件适配不同学校
+% 这里封面和声明页可以通过 Word 转为 PDF 文件插入
+% 可以修改类文件以满足不同格式要求
+
+%----- 设置英文字体 -----
+%\usepackage{newtxtext}  % New TX font for text
+%\setmainfont{TeX Gyre Termes}  % Times New Roman 的开源复刻版本
+%\setsansfont{TeX Gyre Heros}   % Helvetica 的开源复刻版本
+%\setmonofont{TeX Gyre Cursor}  % Courier New 的开源复刻版本
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+%\setmonofont{Courier New}
+
+%----- 设置数学字体 -----
+%\usepackage{newtxmath}
+%\usepackage{mathptmx}
+
+%----- 添加其他宏包 -----
+%\usepackage[notcite,notref]{showkeys}
+\usepackage{listings}
+\usepackage{subfig}
+
+%----- 设置超链接颜色 -----
+%\hypersetup{linkcolor=magenta}
+%\hypersetup{hidelinks}
+
+%----- 参考文献格式 -----
+%\bibliographystyle{plain} % abbrv, unsrt, siam
+\bibliographystyle{univthesis-numeric}
+%\bibliographystyle{univthesis-author-year}
+
+%----- 参考文献引用格式 -----
+\citestyle{numbers}
+%\citestyle{super}
+%\citestyle{authoryear}
+
+%----- 调整列表项的间距 -----
+%\setlength{\itemsep}{3pt}
+
+%----- 调整页面避免出现过大空白 -----
+%\raggedbottom
+
+%----- 定义符号描述命令  -----
+\newcommand{\nameditem}[3][]{
+\noindent\hspace{2em}\makebox[0.2\textwidth][l]{#2}{{#3}
+\hfill\makebox[0.2\textwidth][l]{#1}\hspace*{2em}}\par}
+
+%----- 微分算子 -----
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+
+%----- 自定义命令 -----
+\newcommand{\CC}{\ensuremath{\mathbb{C}}}
+\newcommand{\RR}{\ensuremath{\mathbb{R}}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\bA}{\boldsymbol{A}}
+\newcommand{\ii}{\mathrm{i}\mkern1mu}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\dx}[1][x]{\mathop{}\!\mathrm{d}#1}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+
+
+\begin{document}
+
+
+% 插入封面 cover.pdf 替换原始封面
+% 中文封面
+\insertcover{cover-zh.pdf}
+% 英文封面
+\insertcover{cover-en.pdf}
+
+% 插入独创性与授权声明页, 此页可以放在最后
+% 将签字扫描的声明页 statement.pdf
+\insertstatement{statement.pdf}
+
+% 以上两个命令都使用了 pdfpages 宏包的 includepdf 命令插入 PDF 文件
+% \includepdf[选项]{PDF文件名}
+
+
+%=============== 摘要 =================%
+
+% 关闭章节编号, 页码使用罗马数字
+\frontmatter
+
+% 中文摘要内容和关键字
+\input{data/cnabstract}
+
+% 英文摘要内容和关键字
+\input{data/enabstract}
+
+%=============== 目录 =================%
+
+% 生成目录
+\maketoc
+
+% 生成插图清单, 如不需要可以注释
+\makelof
+
+% 生成表格清单, 如不需要可以注释
+\makelot
+
+%=====================================%
+
+% 主要符号表, 如不需要可以注释
+\input{data/denotation}
+
+%============== 正文部分 ==============%
+
+% 开启章节编号, 页码使用阿拉伯数字
+\mainmatter
+
+% 第1章 引言
+\input{data/chap01}
+
+% 第2章 LaTeX 常用环境
+\input{data/chap02}
+
+% 第3章 微分方程的数值方法
+\input{data/chap03}
+
+% 第4章 插图环境
+\input{data/chap04}
+
+% 第5章 表格环境
+\input{data/chap05}
+
+
+%============== 参考文献 ==============%
+
+% 生成参考文献, 两种方式任选一种
+
+% 第一种方式, 使用 bib 文件
+%\nocite{*}  % 可以显示全部参考文献
+\bibliography{reference}
+
+%------------------------------------%
+
+% 第二种方式, 手动添加文献信息
+%\input{data/bibliography}
+
+%=============== 附录 ================%
+
+% 添加附录, 如不需要可以注释
+\input{data/appendix}
+
+
+%====================================%
+
+\backmatter % 结束章节自动编号
+
+% 攻读学位期间的研究成果
+\input{data/publications}
+
+% 致谢
+\input{data/acknowledgement}
+
+
+\end{document}
+
