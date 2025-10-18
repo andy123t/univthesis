@@ -2,13 +2,13 @@
 %% This is file `univthesis.cls',
 %%
 %% @author andy123t
-%% @date 2025/07/15
+%% @date 2025/10/18
 %% @version v1.0
 %% LaTeX thesis template for University
 %%
 
 %---------- 定义的新的Class ----------
-\ProvidesClass{univthesis}[2025/07/15 v1.0]
+\ProvidesClass{univthesis}[2025/10/18 v1.0]
 \NeedsTeXFormat{LaTeX2e}
 
 %---------- 定义的新的Options ----------
@@ -376,8 +376,8 @@
     \clearpage
     \pagestyle{plain}%
     \phantomsection
-    \addcontentsline{toc}{chapter}{\cnabstractname}
     \chapter*{\cnabstractname}
+    \addcontentsline{toc}{chapter}{\cnabstractname}
     \chaptermark{\cnabstractname}
 }{%
     \clearpage
@@ -389,8 +389,8 @@
     \clearpage
     \pagestyle{plain}%
     \phantomsection
-    \addcontentsline{toc}{chapter}{\enabstractname}
     \chapter*{\enabstractname}
+    \addcontentsline{toc}{chapter}{\enabstractname}
     \chaptermark{\enabstractname}
 }{%
     \clearpage
@@ -441,8 +441,8 @@
 \newcommand\makelof{%
     \clearpage
     \phantomsection
-    \addcontentsline{toc}{chapter}{\listfigurename}
     \chapter*{\listfigurename}
+    \addcontentsline{toc}{chapter}{\listfigurename}
     \chaptermark{\listfigurename}
     \@starttoc{lof}%
     \clearpage
@@ -452,8 +452,8 @@
 \newcommand\makelot{%
     \clearpage
     \phantomsection
-    \addcontentsline{toc}{chapter}{\listtablename}
     \chapter*{\listtablename}
+    \addcontentsline{toc}{chapter}{\listtablename}
     \chaptermark{\listtablename}
     \@starttoc{lot}%
     \clearpage
@@ -463,8 +463,8 @@
 \newenvironment{denotation}{%
     \clearpage
     \phantomsection
-    \addcontentsline{toc}{chapter}{\denotationname}
     \chapter*{\denotationname}
+    \addcontentsline{toc}{chapter}{\denotationname}
     \chaptermark{\denotationname}
 }{%
     \clearpage
@@ -509,8 +509,8 @@
 \newenvironment{publications}{%
     \clearpage
     \phantomsection
-    \addcontentsline{toc}{chapter}{\univ@publications}
     \chapter*{\univ@publications}
+    \addcontentsline{toc}{chapter}{\univ@publications}
     \chaptermark{\univ@publications}
     \baselineskip=1.2\baselineskip
 }{%
@@ -521,8 +521,8 @@
 \newenvironment{acknowledgement}{%
     \clearpage
     \phantomsection
-    \addcontentsline{toc}{chapter}{\acknowledgementname}
     \chapter*{\acknowledgementname}
+    \addcontentsline{toc}{chapter}{\acknowledgementname}
     \chaptermark{\acknowledgementname}
     \baselineskip=1.2\baselineskip
 }{%
