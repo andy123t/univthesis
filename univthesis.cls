@@ -2,21 +2,25 @@
 %% This is file `univthesis.cls',
 %%
 %% @author andy123t
-%% @date 2025/10/18
-%% @version v1.0
+%%
 %% LaTeX thesis template for University
 %%
 
 %---------- 定义的新的Class ----------
-\ProvidesClass{univthesis}[2025/10/18 v1.0]
+\ProvidesClass{univthesis}[2026/05/16 v1.1]
 \NeedsTeXFormat{LaTeX2e}
 
 %---------- 定义的新的Options ----------
+\newif\ifuniv@bachelor
 \newif\ifuniv@master
 \newif\ifuniv@print
-\DeclareOption{master}{\univ@mastertrue}
-\DeclareOption{doctor}{\univ@masterfalse}
+\newif\ifuniv@fonts
+\univ@fontsfalse
+\DeclareOption{bachelor}{\univ@bachelortrue\univ@masterfalse}
+\DeclareOption{master}{\univ@bachelorfalse\univ@mastertrue}
+\DeclareOption{doctor}{\univ@bachelorfalse\univ@masterfalse}
 \DeclareOption{print}{\univ@printtrue}
+\DeclareOption{fonts}{\univ@fontstrue}
 \DeclareOption{openany}{\PassOptionsToClass{openany}{ctexbook}}
 \DeclareOption{openright}{\PassOptionsToClass{openright}{ctexbook}}
 \DeclareOption{twoside}{\PassOptionsToClass{twoside}{ctexbook}}
@@ -34,10 +38,39 @@
 \PassOptionsToPackage{no-math}{fontspec}
 
 %---------- 载入Class ----------
-\LoadClass[UTF8,a4paper,zihao=-4]{ctexbook}
+\ifuniv@fonts
+  \LoadClass[UTF8,a4paper,zihao=-4,fontset=none]{ctexbook}
+\else
+  \LoadClass[UTF8,a4paper,zihao=-4]{ctexbook}
+\fi
 \@ifclasslater{ctexbook}{2017/01/01}{}{%
     \ClassError{univthesis}{ctex >= 2017/01/01 is required ...}{}%
 }
+
+\ifuniv@fonts
+  \IfFileExists{fonts/SimSun.ttf}{}{\ClassError{univthesis}{Font file `fonts/SimSun.ttf' not found}{}}
+  \IfFileExists{fonts/SimHei.ttf}{}{\ClassError{univthesis}{Font file `fonts/SimHei.ttf' not found}{}}
+  \IfFileExists{fonts/KaiTi.ttf}{}{\ClassError{univthesis}{Font file `fonts/KaiTi.ttf' not found}{}}
+  \IfFileExists{fonts/FangSong.ttf}{}{\ClassError{univthesis}{Font file `fonts/FangSong.ttf' not found}{}}
+
+  \setCJKfamilyfont{zhsong}[Path=fonts/]{SimSun.ttf}
+  \setCJKfamilyfont{zhhei}[Path=fonts/]{SimHei.ttf}
+  \setCJKfamilyfont{zhkai}[Path=fonts/]{KaiTi.ttf}
+  \setCJKfamilyfont{zhfang}[Path=fonts/]{FangSong.ttf}
+
+  \setCJKmainfont{SimSun.ttf}[
+    Path=fonts/,
+    BoldFont=SimHei.ttf,
+    ItalicFont=KaiTi.ttf
+  ]
+  \setCJKsansfont{SimHei.ttf}[Path=fonts/]
+  \setCJKmonofont{FangSong.ttf}[Path=fonts/]
+
+  \providecommand\songti{\CJKfamily{zhsong}}
+  \providecommand\heiti{\CJKfamily{zhhei}}
+  \providecommand\kaishu{\CJKfamily{zhkai}}
+  \providecommand\fangsong{\CJKfamily{zhfang}}
+\fi
 
 %---------- 定义页边距 ----------
 \RequirePackage{geometry}
@@ -52,6 +85,7 @@
 \RequirePackage{amsmath,amssymb,amsthm}
 \RequirePackage{mathrsfs}
 \RequirePackage{graphicx}
+\RequirePackage{array}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}
 \RequirePackage{float}
@@ -65,6 +99,7 @@
 \RequirePackage{anyfontsize}
 \RequirePackage{pdfpages}
 \RequirePackage[numbered]{bookmark}
+\RequirePackage{microtype}
 
 %---------- 定义文档属性格式 ----------
 \def\univ@define@term#1{%
@@ -80,10 +115,14 @@
 \newcommand\denotationname{主要符号表}
 \newcommand\acknowledgementname{致谢}
 
-\ifuniv@master
-    \newcommand\univ@publications{攻读硕士学位期间的研究成果}%
+\ifuniv@bachelor
+    \newcommand\univ@publications{本科期间的研究成果}%
 \else
-    \newcommand\univ@publications{攻读博士学位期间的研究成果}%
+    \ifuniv@master
+        \newcommand\univ@publications{攻读硕士学位期间的研究成果}%
+    \else
+        \newcommand\univ@publications{攻读博士学位期间的研究成果}%
+    \fi
 \fi
 
 %------- 重新定义cleardoublepage --------
@@ -324,6 +363,7 @@
 
 %---------- 公式编号带章节 ----------
 \numberwithin{equation}{chapter}
+%\renewcommand{\theequation}{\thechapter.\arabic{equation}}
 
 %---------- 重新设置公式autoref ----------
 \renewcommand{\equationautorefname}{公式}
@@ -431,7 +471,9 @@
     \clearpage
     \pagestyle{plain}
     \phantomsection
-    \addcontentsline{toc}{chapter}{\contentsname}
+    \ifuniv@bachelor\else
+        \addcontentsline{toc}{chapter}{\contentsname}
+    \fi
     \tableofcontents
     \clearpage
     \if@openright\cleardoublepage\fi
@@ -442,7 +484,9 @@
     \clearpage
     \phantomsection
     \chapter*{\listfigurename}
-    \addcontentsline{toc}{chapter}{\listfigurename}
+    \ifuniv@bachelor\else
+        \addcontentsline{toc}{chapter}{\listfigurename}
+    \fi
     \chaptermark{\listfigurename}
     \@starttoc{lof}%
     \clearpage
@@ -453,7 +497,9 @@
     \clearpage
     \phantomsection
     \chapter*{\listtablename}
-    \addcontentsline{toc}{chapter}{\listtablename}
+    \ifuniv@bachelor\else
+        \addcontentsline{toc}{chapter}{\listtablename}
+    \fi
     \chaptermark{\listtablename}
     \@starttoc{lot}%
     \clearpage
