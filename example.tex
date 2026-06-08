@@ -3,7 +3,7 @@
 % xelatex -> bibtex -> xelatex -> xelatex
 % UNIV-Thesis 通用的本科/硕博毕业论文 LaTeX 模板
 
-\documentclass[master,fonts]{univthesis}
+\documentclass[master]{univthesis}
 % bachelor 本科毕业论文, 不能省略
 % master 硕士学位论文, 默认可省略
 % doctor 博士学位论文, 不能省略
@@ -83,8 +83,7 @@
 % 英文封面
 \insertcover{cover-en.pdf}
 
-% 插入独创性与授权声明页, 此页可以放在最后
-% 将签字扫描的声明页 statement.pdf
+% 插入独创性与授权声明页, 可用 Word 生成
 \insertstatement{statement.pdf}
 
 % 以上两个命令都使用了 pdfpages 宏包的 includepdf 命令插入 PDF 文件
